@@ -6,7 +6,7 @@ const userRoutes = require ('./routes/user');
 const commentRoutes = require ('./routes/comment')
 const app = express();
 
-app.listen(() => console.log(`App listening on port ${process.env.PORT}`))
+app.listen(process.env.PORT, () => console.log(`App listening on port ${process.env.PORT}`))
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

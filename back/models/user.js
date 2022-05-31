@@ -3,7 +3,7 @@ const connection = require('../config');
 class User {
 	static insert( first_name, last_name, email, password, callback) {
 		connection.execute(
-			`INSERT INTO user ( first_name, last_name, email, user_password ) values (?, ?, ?, ?, now());`,
+			`INSERT INTO user ( first_name, last_name, email, password ) values (?, ?, ?, ?)`,
 			[ first_name, last_name, email, password ],
 			callback
 		);
