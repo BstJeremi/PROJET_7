@@ -6,17 +6,21 @@ import Accueil from './pages/Accueil';
 import SignUp from './pages/SignUp';
 import Post from './pages/Post';
 import EditProfil from './pages/EditProfil';
+import Header from './components/Header'
 
 function App() {
 	return (
 		<Router>
+			<Header/>
+			<div className="container">
 			<Routes>
-				<Route path="/" exact component={Accueil} />
-				<Route path="/login" component={Login} />
-				<Route path="/signup" component={SignUp} />
-				<Route path="/post" component={Post} />
-				<Route path="/profile" component={EditProfil} />
+				<Route path="/" element={<Accueil/>} />
+				<Route path="/login" element={<Login/>} />
+				<Route path="/signup" element={<SignUp/>} />
+				<Route path="/post" element={<Post/>} />
+				<Route path="/profil" element={<EditProfil/>} />
 			</Routes>
+			</div>
 		</Router>
 	);
 }

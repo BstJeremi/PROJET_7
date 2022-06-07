@@ -1,9 +1,17 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require ('mongoose')
 require('dotenv').config();
+
 const postRoutes = require ('./routes/post');
 const userRoutes = require ('./routes/user');
-const commentRoutes = require ('./routes/comment')
+
+mongoose.connect(process.env.SECRET, 
+  { useNewUrlParser: true,
+    useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch(() => console.log('Connexion à MongoDB échouée !'))
+
 const app = express();
 
 app.listen(process.env.PORT, () => console.log(`App listening on port ${process.env.PORT}`))
@@ -21,4 +29,3 @@ app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
-app.use("/api/comment", commentRoutes);
