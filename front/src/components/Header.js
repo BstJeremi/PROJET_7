@@ -26,7 +26,7 @@ export default function Header() {
 							</NavLink>
 						</li>
 						<li className="nav-item">
-							<NavLink className="nav-link" to="/post" tabindex="-1" aria-disabled="true">
+							<NavLink className="nav-link" to="/post" tabIndex="-1" aria-disabled="true">
 								Créer un post 
 							</NavLink>
 						</li>

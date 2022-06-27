@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const PostSchema = new mongoose.Schema(
 	{
-		posterId: {
-			type: String,
+		user: {
+			type: Schema.Types.ObjectId,
+			ref: 'User',
 			required: true
 		},
 		message: {
@@ -11,26 +13,11 @@ const PostSchema = new mongoose.Schema(
 			trim: true,
 			maxlength: 500
 		},
-		picture: {
+		imageUrl: {
 			type: String
 		},
 		video: {
 			type: String
-		},
-		likers: {
-			type: [ String ],
-			required: true
-		},
-		comments: {
-			type: [
-				{
-					commenterId: String,
-					commenterPseudo: String,
-					text: String,
-					timestamp: Number
-				}
-			],
-			required: true
 		}
 	},
 	{
@@ -38,4 +25,4 @@ const PostSchema = new mongoose.Schema(
 	}
 );
 
-module.exports = mongoose.model('post', PostSchema);
+module.exports = mongoose.model('Post', PostSchema);

@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema(
 	{
 		pseudo: {
 			type: String,
-			required: true,
 			minLength: 3,
 			max: 55,
 			unique: true,
@@ -48,6 +47,6 @@ const userSchema = new mongoose.Schema(
 	}
 );
 
-const UserModel = mongoose.model('user', userSchema);
+const UserModel = mongoose.model('User', userSchema);
 
 module.exports = UserModel;
