@@ -1,9 +1,13 @@
 import Axios from 'axios';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+import { AppContext } from '../../AppContext';
 
 function Login() {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
+	const { appContext, setAppContext } = useContext(AppContext);
+	const navigate = useNavigate();
 
 	const validate = (e) => {
 
@@ -16,12 +20,16 @@ function Login() {
 				password: password
 			}
 		})
-			.then((res) => {
-				console.log(res);
-			})
-			.catch((err) => {
-				alert('Mot de passe ou email incorrect !');
+		.then(({data}) => {
+			localStorage.setItem('token' , data.token);
+			setAppContext({
+				isConnected: true
 			});
+			navigate('/')
+		})
+		.catch((err) => {
+			alert('Mot de passe ou email incorrect !');
+		});
 	};
 
 	return (

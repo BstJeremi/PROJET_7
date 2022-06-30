@@ -1,7 +1,12 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AppContext } from "../AppContext";
 import img from "../images/icon-left-font-monochrome-black.png"
 
 export default function Header() {
+	const {appContext, setAppContext} = useContext(AppContext);
+	const navigate = useNavigate();
+
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ height: 60 }}>
 			<div className="container-fluid">
@@ -16,19 +21,33 @@ export default function Header() {
                             </NavLink>
 						</li>
 						<li className="nav-item">
-							<NavLink className="nav-link" to="/login">
-								Se connecter
-							</NavLink>
+							{
+								!appContext.isConnected ? 
+								<NavLink className="nav-link" to="/login">
+									Se connecter
+								</NavLink> 
+								: 
+								<a href="" className="nav-link" onClick={e => {
+									e.preventDefault();
+									setAppContext({
+										isConnected: false
+									})
+									localStorage.removeItem('token')
+									navigate('/')
+								}}>
+									Déconnexion
+								</a> 
+							}
 						</li>
 						<li className="nav-item">
-							<NavLink className="nav-link" to="/signup">
+							{ !appContext.isConnected && <NavLink className="nav-link" to="/signup">
 								S'inscrire
-							</NavLink>
+							</NavLink> }
 						</li>
 						<li className="nav-item">
-							<NavLink className="nav-link" to="/post" tabIndex="-1" aria-disabled="true">
+							{ appContext.isConnected && <NavLink className="nav-link" to="/post" tabIndex="-1" aria-disabled="true">
 								Créer un post 
-							</NavLink>
+							</NavLink>}
 						</li>
 					</ul>
 				</div>

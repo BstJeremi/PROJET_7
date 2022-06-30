@@ -18,7 +18,14 @@ const PostSchema = new mongoose.Schema(
 		},
 		video: {
 			type: String
-		}
+		},
+		usersLiked: {
+			type: [String]
+		},
+		comments: [{
+			type: Schema.Types.ObjectId,
+			ref: 'Comment'
+		}]
 	},
 	{
 		timestamps: true

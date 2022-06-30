@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios';
+import Post from '../../components/Post';
+import Spinner from '../../components/Spinner';
 
 export default function Accueil() {
 
-    const [ dataPost, setDataPost ] = useState()
+    const [posts, setPosts] = useState(null);
 
     useEffect(() => {
-        fetch("http://localhost:4000/api/post/")
-        .then(response => {
-            console.log(response)
-            return response.json()
-        })
-        .then(data => {
-            console.log(data)
-            setDataPost(data[0].imageUrl)
+        axios.get('post')
+        .then(({ data }) => {
+            setPosts(data);
         })
     }, [])
 
-  return (
-    <div className="home_main">
-        { dataPost && <img src={dataPost} style={{width: '300px'}} alt="plante"/>}
-    </div>
-  )
+    let content = <Spinner />;
+
+    if (posts != null) {
+        content = posts.map(post => 
+            <Post key={post._id} {...post} />
+        )
+    }
+
+    return (
+        <div className="col-md-12">
+            {content}
+        </div>
+    )
 }

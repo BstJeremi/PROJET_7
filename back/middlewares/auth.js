@@ -5,6 +5,7 @@ module.exports = (req, res, next) => {
         const token = req.header('X-auth-token');
         const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
         const userId = decodedToken.userId;
+        req.userId = userId;
         if (req.body.userId && req.body.userId !== userId) {
             throw 'invalid user ID';
         } else {

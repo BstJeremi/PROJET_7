@@ -1,25 +1,29 @@
 const Post = require('../models/post');
+const Comment = require('../models/comment');
 const fs = require('fs');
 
 exports.getAllPosts = (req, res, next) => {
 	Post.find()
+		.sort({createdAt: -1})
+		.populate('comments')
 		.populate({ path: 'user', select: [ 'pseudo', 'picture' ] })
 		.then((posts) => res.status(200).json(posts));
 };
 
 exports.getOnePost = (req, res, next) => {
 	Post.findOne({ _id: req.params.id })
+		.populate({ path: 'user', select: [ 'pseudo', 'picture' ] })
 		.then((post) => res.status(200).json(post))
 		.catch((error) => res.status(404).json({ error }));
 };
 
 exports.createPost = (req, res, next) => {
 	const postObject = JSON.parse(req.body.post);
-	console.log(postObject);
 	delete postObject._id;
 
 	const post = new Post({
-		...postObject,
+		message: postObject.message,
+		user: req.userId,
 		imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
 	});
 	post
@@ -53,11 +57,16 @@ exports.deletePost = (req, res, next) => {
 		.catch((error) => res.status(500).json({ error }));
 };
 
-exports.likeOrDislike = (req, res, next) => {
+exports.getComments = (req, res) => {
+	Comment.find({post: req.params.id})
+		.then((comments) => res.status(200).json(comments));
+}
+
+exports.likeOrDislike = (req, res) => {
 	if (req.body.like === 1) {
 		Post.updateOne(
 			{ _id: req.params.id },
-			{ $inc: { likes: req.body.like++ }, $push: { usersLiked: req.body.userId } }
+			{ $push: { usersLiked: req.params.id } }
 		)
 			.then((post) => res.status(200).json({ message: 'Like ajouté !' }))
 			.catch((error) => res.status(400).json({ error }));
@@ -70,6 +79,7 @@ exports.likeOrDislike = (req, res, next) => {
 					})
 					.catch((error) => res.status(400).json({ error }));
 			}
-		});
+		})
+		.catch(e => console.log(e));
 	}
 };
