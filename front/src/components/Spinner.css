@@ -5,12 +5,12 @@
     width: 11em;
     height: 11em;
     border-radius: 50%;
-    background: #EB8C09;
-    background: -moz-linear-gradient(left, #EB8C09 10%, rgba(70,65,146, 0) 42%);
-    background: -webkit-linear-gradient(left, #EB8C09 10%, rgba(70,65,146, 0) 42%);
-    background: -o-linear-gradient(left, #EB8C09 10%, rgba(70,65,146, 0) 42%);
-    background: -ms-linear-gradient(left, #EB8C09 10%, rgba(70,65,146, 0) 42%);
-    background: linear-gradient(to right, #EB8C09 10%, rgba(70,65,146, 0) 42%);
+    background: #FD2D01;
+    background: -moz-linear-gradient(left, #FD2D01 10%, rgba(70,65,146, 0) 42%);
+    background: -webkit-linear-gradient(left, #FD2D01 10%, rgba(70,65,146, 0) 42%);
+    background: -o-linear-gradient(left, #FD2D01, rgba(70,65,146, 0) 42%);
+    background: -ms-linear-gradient(left, #FD2D01 10%, rgba(70,65,146, 0) 42%);
+    background: linear-gradient(to right, #FD2D01 10%, rgba(70,65,146, 0) 42%);
     position: relative;
     -webkit-animation: load3 1.4s infinite linear;
     animation: load3 1.4s infinite linear;
@@ -21,7 +21,7 @@
   .Spinner:before {
     width: 50%;
     height: 50%;
-    background: #EB8C09;
+    background: #FD2D01;
     border-radius: 100% 0 0 0;
     position: absolute;
     top: 0;
@@ -29,7 +29,7 @@
     content: '';
   }
   .Spinner:after {
-    background: #EB8C09;
+    background: #FD2D01;
     width: 75%;
     height: 75%;
     border-radius: 50%;

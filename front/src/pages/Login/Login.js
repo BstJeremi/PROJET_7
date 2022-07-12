@@ -14,7 +14,7 @@ function Login() {
 		e.preventDefault();
 		Axios({
 			method: 'post',
-			url: 'http://localhost:4000/api/user/login',
+			url: 'user/login',
 			data: {
 				email: email,
 				password: password

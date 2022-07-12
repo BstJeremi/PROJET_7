@@ -7,7 +7,7 @@ const NewPost = () => {
 	const navigate = useNavigate();
 
     const [image, setImage] = useState(null);
-    const [message, setMessage] = useState('Entrez quelque chose ici');
+    const [message, setMessage] = useState('');
 
 	const validate = (e) => {
         e.preventDefault();
@@ -19,7 +19,7 @@ const NewPost = () => {
 
         axios({
             method: "POST",
-            url: "post",
+            url: 'post',
             data: formData,
             headers: { "Content-Type": "multipart/form-data" },
         }).then(({data}) => {
@@ -32,7 +32,7 @@ const NewPost = () => {
 	};
 
 	return (
-		<form onSubmit={validate} style={{ marginTop: 50 }}>
+		<form onSubmit={validate} class="post-gen">
 			<div className="form-group" style={{ marginTop: 10 }}>
 				<label htmlFor="image">Image</label>
 				<input
