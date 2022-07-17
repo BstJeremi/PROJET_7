@@ -32,7 +32,7 @@ function Login() {
 	};
 
 	return (
-		<form onSubmit={validate} className="login" style={{ marginTop: 50, color: 'white'}}>
+		<form onSubmit={validate} className="login" style={{ marginTop: 50 }}>
 			<div className="form-group" style={{ marginTop: 10 }}>
 				<label htmlFor="email">Email</label>
 				<input

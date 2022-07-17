@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
 function SignUp() {
-	const [pseudo, setPseudo] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [ pseudo, setPseudo ] = useState('');
+	const [ email, setEmail ] = useState('');
+	const [ password, setPassword ] = useState('');
 	const navigate = useNavigate();
 
 	const signup = (e) => {
@@ -23,16 +23,15 @@ function SignUp() {
 				alert(data.message);
 				navigate('/');
 			})
-			.catch(error => {
-				alert('Une erreur est survenue')
-			})
-
+			.catch((error) => {
+				alert('Une erreur est survenue');
+			});
 	};
 
 	return (
-		<form onSubmit={signup} style={{color: 'white'}}>
+		<form onSubmit={signup}>
 			<div className="form-row">
-				<div className="col-md-4 mb-3" style={{margin: 10, width: '50%'}}>
+				<div className="col-md-4 mb-3">
 					<label htmlFor="validationServerUsername">Pseudo</label>
 					<div className="input-group">
 						<input
@@ -45,7 +44,7 @@ function SignUp() {
 						/>
 					</div>
 				</div>
-				<div className="form-group col-md-6" style={{margin: 10}}>
+				<div className="form-group col-md-6">
 					<label htmlFor="email">Email</label>
 					<input
 						type="email"
@@ -54,7 +53,7 @@ function SignUp() {
 						onInput={(e) => setEmail(e.target.value)}
 					/>
 				</div>
-				<div className="form-group col-md-6" style={{margin: 10}}>
+				<div className="form-group col-md-6">
 					<label htmlFor="password">Mot de passe</label>
 					<input
 						type="password"
@@ -64,11 +63,11 @@ function SignUp() {
 					/>
 				</div>
 			</div>
-			<button type="submit" className="btn btn-primary" style={{margin: 10}}>
+			<button type="submit" className="btn btn-primary">
 				S'inscrire
 			</button>
 		</form>
 	);
-};
+}
 
 export default SignUp;

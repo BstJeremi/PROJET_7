@@ -10,7 +10,8 @@ exports.signup = (req, res, next) => {
 			const user = new User({
 				pseudo: req.body.pseudo,
 				email: req.body.email,
-				password: hash
+				password: hash,
+				isAdmin: false
 			});
 			user
 				.save()
@@ -26,17 +27,20 @@ exports.login = (req, res, next) => {
 			if (!user) {
 				return res.status(401).json({ error: 'Utilisateur non trouvé !' });
 			}
-			bcrypt
-				.compare(req.body.password, user.password)
-				.then((valid) => {
-					if (!valid) {
-						return res.status(401).json({ error: 'Mot de passe incorrect !' });
-					}
-					res.status(200).json({
-						userId: user._id,
-						token: jwt.sign({ userId: user._id, pseudo: user.pseudo }, process.env.TOKEN_SECRET, { expiresIn: '24h' })
-					});
-				})
+			bcrypt.compare(req.body.password, user.password).then((valid) => {
+				if (!valid) {
+					return res.status(401).json({ error: 'Mot de passe incorrect !' });
+				}
+
+				res.status(200).json({
+					userId: user._id,
+					token: jwt.sign(
+						{ userId: user._id, pseudo: user.pseudo, isAdmin: user.isAdmin },
+						process.env.TOKEN_SECRET,
+						{ expiresIn: '24h' }
+					)
+				});
+			});
 		})
 		.catch((error) => res.status(500).json({ error }));
 };

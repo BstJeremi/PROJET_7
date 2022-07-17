@@ -19,13 +19,10 @@ const PostSchema = new mongoose.Schema(
 		video: {
 			type: String
 		},
+		likesCount: Number,
 		usersLiked: {
-			type: [String]
-		},
-		comments: [{
-			type: Schema.Types.ObjectId,
-			ref: 'Comment'
-		}]
+			type: [ String ]
+		}
 	},
 	{
 		timestamps: true

@@ -152,7 +152,7 @@ export default function Post(props) {
 						onClick={() => likeSubmit(liked + 1)}
 						style={{ color: liked ? 'blue' : 'black' }}
 					/>
-					<p>{likesCount}</p>
+					<p>({likesCount})</p>
 				</div>
 			</div>
 			{ 
