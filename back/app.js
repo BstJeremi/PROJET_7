@@ -6,11 +6,8 @@ require('dotenv').config();
 
 const postRoutes = require ('./routes/post');
 const userRoutes = require ('./routes/user');
-const commentRoutes = require('./routes/comment');
 
-mongoose.connect(process.env.SECRET, 
-  { useNewUrlParser: true,
-    useUnifiedTopology: true })
+mongoose.connect(process.env.SECRET)
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'))
 
@@ -32,4 +29,3 @@ app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
-app.use("/api/comment", commentRoutes);

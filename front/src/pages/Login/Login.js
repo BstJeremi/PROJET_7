@@ -1,18 +1,17 @@
-import Axios from 'axios';
+import axios from 'axios';
 import { useState, useContext } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../AppContext';
 
 function Login() {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
-	const { appContext, setAppContext } = useContext(AppContext);
+	const { setAppContext } = useContext(AppContext);
 	const navigate = useNavigate();
 
 	const validate = (e) => {
-
 		e.preventDefault();
-		Axios({
+		axios({
 			method: 'post',
 			url: 'user/login',
 			data: {
@@ -20,16 +19,16 @@ function Login() {
 				password: password
 			}
 		})
-		.then(({data}) => {
-			localStorage.setItem('token' , data.token);
-			setAppContext({
-				isConnected: true
+			.then(({ data }) => {
+				localStorage.setItem('token', data.token);
+				setAppContext({
+					isConnected: true
+				});
+				navigate('/');
+			})
+			.catch((err) => {
+				alert('Mot de passe ou email incorrect !');
 			});
-			navigate('/')
-		})
-		.catch((err) => {
-			alert('Mot de passe ou email incorrect !');
-		});
 	};
 
 	return (
@@ -43,7 +42,7 @@ function Login() {
 					name="email"
 					aria-describedby="emailHelp"
 					placeholder="Enter email"
-					onInput={e => setEmail(e.target.value)}
+					onInput={(e) => setEmail(e.target.value)}
 				/>
 			</div>
 			<div className="form-group" style={{ marginTop: 10 }}>
@@ -54,7 +53,7 @@ function Login() {
 					id="password"
 					name="password"
 					placeholder="Password"
-					onInput={e => setPassword(e.target.value)}
+					onInput={(e) => setPassword(e.target.value)}
 				/>
 			</div>
 			<button type="submit" className="btn btn-primary" href="/" style={{ marginTop: 20 }}>

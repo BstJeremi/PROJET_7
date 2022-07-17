@@ -3,3 +3,14 @@ nav {
     background-color: #BFDBFE;
     height: 6rem;
 }
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 50px
+}
+
+.navbar-brand p {
+    margin: 0;
+    color: blueviolet;
+}

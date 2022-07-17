@@ -1,74 +1,106 @@
-import React, { useState } from 'react';
-import Axios from 'axios';
+import React, { useState, useContext, useEffect } from 'react';
+import axios from 'axios';
 import { formatDate } from '../utils';
 import './Post.css';
-// import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import { faMessage } from '@fortawesome/free-solid-svg-icons';
+import { AppContext } from '../AppContext';
+import Spinner from './Spinner';
+import jwtDecode from 'jwt-decode';
+
 
 export default function Post(props) {
-	const [ liked, setLiked ] = useState(0);
-	const [ deleted, setDeleted ] = useState([]);
+	const [liked, setLiked] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [editMode, setEditMode] = useState(false);
+	const [imageUrl, setImageUrl] = useState(props.imageUrl);
+	const [message, setMessage] = useState(props.message);
+	const [image, setImage] = useState(null);
+	const [likesCount, setLikesCount] = useState(props.likesCount);
+	const { appContext } = useContext(AppContext);
+	let userInfos = null;
 
-	// const [message, setMessage] = useState('');
-	// const navigate = useNavigate();
+	if (appContext.isConnected) {
+		userInfos = jwtDecode(localStorage.getItem('token'));
+	}
 
-	console.log(props._id)
+	useEffect(() => {
+        if (userInfos) {
+			const index = props.usersLiked.findIndex(item => item === userInfos.userId);
+			setLiked(index >= 0);
+		}
+    }, [props.usersLiked])
 
 	const likeSubmit = () => {
+		if (!appContext.isConnected) {
+			alert('Vous devez vous connecter');
+		}
 		const id = props._id;
-		Axios({
+		axios({
 			method: 'post',
 			url: 'post/' + id + '/like',
 			data: {
 				liked: liked
 			}
-		}).then((response) => {
-			const order = response.data.reverse();
-			setLiked(order);
+		}).then(({data}) => {
+			alert(data.message);
+			//Permet de colorer l'icône de like en bleu ou pas
+			setLiked(data.liked);
+			setLikesCount(data.likesCount);
 		});
 	};
 
-	const deleteArticle = () => {
-		const id = localStorage['id'];
-		console.log(id);
-		window.confirm(`La supression d'un article est irreversible, êtes-vous sur ?`);
-		Axios({
-			method: 'delete',
-			url: 'post/' + id
-		}).then((res) => {
-			console.log(`Le post ${id} à été suprimé`);
-			setDeleted(res.data.data);
-			window.location = '/';
+	const updatePost = e => {
+		e.preventDefault();
+		setLoading(true);
 
-		});
+		const formData = new FormData();
+        if (image) {
+			formData.append("image", image);
+		}
+
+        formData.append('post', JSON.stringify({
+            message
+        }));
+
+        axios({
+            method: "PUT",
+            url: 'post/' + props._id,
+            data: formData,
+            headers: { "Content-Type": "multipart/form-data" },
+        }).then(({data}) => {
+            alert(data.message);
+			setLoading(false);
+			setEditMode(false);
+
+			//Si l'image a été modifiée
+			if (data.imageUrl) {
+				setImageUrl(data.imageUrl);
+			}
+        })
+        .catch(error => {
+			setLoading(false);
+            alert('Une erreur est survenue')
+        })
+	}
+
+	const deletePost = () => {
+		const id = props._id;
+		setLoading(true);
+		if (window.confirm(`La supression d'un article est irreversible, êtes-vous sûr ?`)) {
+			axios.delete('post/' + id)
+			.then(({ data }) => {
+				alert(data.message);
+				props.deletePost(id);
+				setLoading(false);
+			})
+			.fail(err => {
+				setLoading(false);
+			});
+		}
 	};
-
-	// const modify = () => {
-	// const id = localStorage['id'];
-	// console.log(id);
-	// const formData = new FormData();
-	// formData.append("image", image);
-	// formData.append('post', JSON.stringify({
-	// message
-	// }));
-
-	// Axios({
-	// method: 'put',
-	// url: 'post/' + id,
-	// data: formData,
-	// headers: { "Content-Type": "multipart/form-data" },
-	// }).then(({data}) => {
-	// alert(data.message);
-	// navigate('/post');
-	// })
-	// .catch(error => {
-	// alert('Une erreur est survenue')
-	// })
-	// };
 
 	return (
 		<div className="post card gedf-card">
@@ -83,12 +115,22 @@ export default function Post(props) {
 						</div>
 					</div>
 					<div className="interaction-block">
-						<div>
-							<FontAwesomeIcon icon={faPenToSquare} />
-						</div>
-						<div>
-							<FontAwesomeIcon icon={faTrash} onClick={deleteArticle} />
-						</div>
+						{
+							//On affiche les boutons si l'utilisateur est connecté et qu'il a le droit de modifier le poste
+							//Et également si un processus n'est pas en court
+							appContext.isConnected && !loading && (userInfos.isAdmin || userInfos.userId === props.user._id) &&  (
+									<>
+										<div>
+											<FontAwesomeIcon onClick={e => {
+												setEditMode(true);
+											}} icon={faPenToSquare} />
+										</div>
+										<div>
+											<FontAwesomeIcon icon={faTrash} onClick={deletePost} />
+										</div>
+									</>
+							)
+						}
 					</div>
 				</div>
 			</div>
@@ -98,22 +140,45 @@ export default function Post(props) {
 					<i className="fa fa-clock-o" /> {formatDate(props.createdAt)}
 				</div>
 				<div className="post-img">
-					<img src={props.imageUrl} />
+					<img src={imageUrl} alt="Illlustration poste"/>
 				</div>
-				<p className="card-text">{props.message}</p>
+				
+				{ loading ? <Spinner /> : <p className="card-text"> {message} </p>}
 			</div>
 			<div className="card-footer interaction-block">
-				<div>
+				<div className='iconBlock'>
 					<FontAwesomeIcon
 						icon={faThumbsUp}
 						onClick={() => likeSubmit(liked + 1)}
-						style={{ color: likeSubmit ? 'blue' : 'black' }}
+						style={{ color: liked ? 'blue' : 'black' }}
 					/>
-				</div>
-				<div>
-					<FontAwesomeIcon icon={faMessage} />
+					<p>{likesCount}</p>
 				</div>
 			</div>
+			{ 
+				editMode &&
+				<form onSubmit={updatePost} className="edit-form">
+					<div className="form-group" style={{ marginTop: 10 }}>
+						<label htmlFor="image">Image</label>
+						<input
+							type="file"
+							className="form-control"
+							name="image"
+							onChange={e => setImage(e.target.files[0])}
+						/>
+					</div>
+					<div className="form-group" style={{ marginTop: 10 }}>
+						<label htmlFor="content">Message</label>
+						<textarea className="form-control" onChange={e => setMessage(e.target.value)} value={message}></textarea>
+					</div>
+					{
+						!loading &&
+						<button type="submit" className="btn btn-primary" href="/" style={{ marginTop: 20 }}>
+							Mettre à jour
+						</button> 
+					}
+				</form>
+			}
 		</div>
 	);
 }

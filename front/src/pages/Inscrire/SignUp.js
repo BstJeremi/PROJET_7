@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
 function SignUp() {
-	const [ pseudo, setPseudo ] = useState('');
-	const [ email, setEmail ] = useState('');
-	const [ password, setPassword ] = useState('');
+	const [pseudo, setPseudo] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 	const navigate = useNavigate();
 
 	const signup = (e) => {
@@ -19,13 +19,13 @@ function SignUp() {
 				password: password
 			}
 		})
-		.then(({data}) => {
-            alert(data.message);
-            navigate('/');
-        })
-        .catch(error => {
-            alert('Une erreur est survenue')
-        })
+			.then(({ data }) => {
+				alert(data.message);
+				navigate('/');
+			})
+			.catch(error => {
+				alert('Une erreur est survenue')
+			})
 
 	};
 

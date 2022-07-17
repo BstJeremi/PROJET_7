@@ -23,3 +23,17 @@
     margin-left: 20px;
     cursor: pointer;
 }
+
+.edit-form {
+    padding: 30px;
+}
+
+.iconBlock {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.iconBlock p {
+    margin: 0;
+}

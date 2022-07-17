@@ -1,25 +1,25 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AppContext } from '../AppContext';
 import img from '../images/icon-left-font-monochrome-black.png';
 import './Header.css';
-// import jwtDecode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 
 export default function Header() {
 	const { appContext, setAppContext } = useContext(AppContext);
 	const navigate = useNavigate();
+	let userInfos = null;
 
-	// useEffect(() => {
-	// const token = localStorage.getItem('token');
-	// const decoded = jwtDecode(token);
-	// console.log(decoded);
-	// });
+	if (appContext.isConnected) {
+		userInfos = jwtDecode(localStorage.getItem('token'));
+	}
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-light">
 			<div className="container-fluid">
 				<div className="navbar-brand" href="#">
 					<img className="Logo_Header" style={{ width: 150 }} src={img} alt="Logo" />
+					{appContext.isConnected && userInfos && <p>Connecté en tant que: {userInfos.pseudo} </p>}
 				</div>
 				<div className="collapse navbar-collapse" id="navbarNav" style={{ justifyContent: 'flex-end' }}>
 					<ul className="navbar-nav">
@@ -35,7 +35,7 @@ export default function Header() {
 								</NavLink>
 							) : (
 								<a
-									href=""
+									href="#url"
 									className="nav-link"
 									onClick={(e) => {
 										e.preventDefault();
