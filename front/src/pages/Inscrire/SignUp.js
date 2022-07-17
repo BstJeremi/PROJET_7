@@ -30,9 +30,9 @@ function SignUp() {
 	};
 
 	return (
-		<form onSubmit={signup}>
+		<form onSubmit={signup} style={{color: 'white'}}>
 			<div className="form-row">
-				<div className="col-md-4 mb-3">
+				<div className="col-md-4 mb-3" style={{margin: 10, width: '50%'}}>
 					<label htmlFor="validationServerUsername">Pseudo</label>
 					<div className="input-group">
 						<input
@@ -45,7 +45,7 @@ function SignUp() {
 						/>
 					</div>
 				</div>
-				<div className="form-group col-md-6">
+				<div className="form-group col-md-6" style={{margin: 10}}>
 					<label htmlFor="email">Email</label>
 					<input
 						type="email"
@@ -54,7 +54,7 @@ function SignUp() {
 						onInput={(e) => setEmail(e.target.value)}
 					/>
 				</div>
-				<div className="form-group col-md-6">
+				<div className="form-group col-md-6" style={{margin: 10}}>
 					<label htmlFor="password">Mot de passe</label>
 					<input
 						type="password"
@@ -64,7 +64,7 @@ function SignUp() {
 					/>
 				</div>
 			</div>
-			<button type="submit" className="btn btn-primary">
+			<button type="submit" className="btn btn-primary" style={{margin: 10}}>
 				S'inscrire
 			</button>
 		</form>

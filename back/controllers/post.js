@@ -32,7 +32,7 @@ exports.modifyPost = async (req, res) => {
 	let post = await Post.findOne({ _id: req.params.id });
 
 	if (post === null) {
-		return res.send(404).send('Poste introuvable');
+		return res.send(404).send('Post introuvable');
 	}
 
 	if (req.userId !== post.user._id.toString() && !req.isAdmin) {
@@ -65,9 +65,9 @@ exports.likeOrDislike = async (req, res) => {
 
 	if (post.usersLiked.includes(req.userId)) {
 		await Post.updateOne({ _id: post._id }, { $inc: { likesCount: -1 }, $pull: { usersLiked: req.userId } });
-		return res.send({ message: 'Like supprimé avec succès', liked: false, likesCount: post.likesCount - 1 });
+		return res.send({ message: 'Like supprimé avec succès', liked: false, likesCount: post.liked - 1 });
 	} else {
 		await Post.updateOne({ _id: post._id }, { $inc: { likesCount: 1 }, $push: { usersLiked: req.userId } });
-		return res.send({ message: 'Like ajouté avec succès', liked: true, likesCount: post.likesCount + 1 });
+		return res.send({ message: 'Like ajouté avec succès', liked: true, likesCount: post.liked + 1 });
 	}
 };
