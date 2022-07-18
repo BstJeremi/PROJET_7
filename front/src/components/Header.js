@@ -15,7 +15,7 @@ export default function Header() {
 	}
 
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light bg-light">
+		<nav className="navbar navbar-expand navbar-light bg-light">
 			<div className="container-fluid">
 				<div className="navbar-brand" href="#">
 					<img className="Logo_Header" style={{ width: 150 }} src={img} alt="Logo" />

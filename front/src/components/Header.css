@@ -1,6 +1,6 @@
 nav {
     top: 0px;
-    background-color: #BFDBFE;
+    background-color: #FFD7D7;
     height: 6rem;
 }
 
@@ -12,5 +12,5 @@ nav {
 
 .navbar-brand p {
     margin: 0;
-    color: blueviolet;
+    color: #4E5166;
 }

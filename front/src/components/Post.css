@@ -1,14 +1,12 @@
 .post-img img {
     width: 100%;
-    max-height: 300px;
+    max-height: 400px;
 }
 
 .post {
     display: flex;
     justify-content: center;
     margin-top: 30px;
-    margin-right: 250px;
-    margin-left: 250px;
 }
 
 .card-text {

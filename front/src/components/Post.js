@@ -45,7 +45,6 @@ export default function Post(props) {
 				liked: liked
 			}
 		}).then(({data}) => {
-			alert(data.message);
 			//Permet de colorer l'icône de like en bleu ou pas
 			setLiked(data.liked);
 			setLikesCount(data.likesCount);
@@ -152,7 +151,7 @@ export default function Post(props) {
 						onClick={() => likeSubmit(liked + 1)}
 						style={{ color: liked ? 'blue' : 'black' }}
 					/>
-					<p>({likesCount})</p>
+					<p>{likesCount}</p>
 				</div>
 			</div>
 			{ 
