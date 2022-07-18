@@ -19,7 +19,7 @@ export default function Header() {
 			<div className="container-fluid">
 				<div className="navbar-brand" href="#">
 					<img className="Logo_Header" style={{ width: 150 }} src={img} alt="Logo" />
-					{appContext.isConnected && userInfos && <p>Connecté en tant que: {userInfos.pseudo} </p>}
+					{appContext.isConnected && userInfos && <p style={{position: "absolute", top: "100px", fontSize: "13px", color: "white"}}>Connecté en tant que: {userInfos.pseudo} </p>}
 				</div>
 				<div className="collapse navbar-collapse" id="navbarNav" style={{ justifyContent: 'flex-end' }}>
 					<ul className="navbar-nav">
@@ -59,7 +59,7 @@ export default function Header() {
 						</li>
 						<li className="nav-item">
 							{appContext.isConnected && (
-								<NavLink className="nav-link" to="/post" tabIndex="-1" aria-disabled="true">
+								<NavLink className="nav-link" to="/post" aria-disabled="true">
 									Créer un post
 								</NavLink>
 							)}

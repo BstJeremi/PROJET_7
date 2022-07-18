@@ -39,8 +39,8 @@ const NewPost = () => {
 	};
 
 	return (
-		<form onSubmit={validate} class="post-gen">
-			<div className="form-group" style={{ marginTop: 10 }}>
+		<form onSubmit={validate} class="post-gen" style={{color: "white"}}>
+			<div className="form-group" style={{ marginTop: 30 }}>
 				<label htmlFor="image">Image</label>
 				<input
 					type="file"
@@ -61,7 +61,7 @@ const NewPost = () => {
 					type="submit"
 					className="btn btn-primary"
 					href="/"
-					style={{ marginTop: 20 }}
+					style={{ marginTop: 20, backgroundColor: "#FD2D01", borderColor: "#FD2D01" }}
 				>
 					Valider
 				</button>

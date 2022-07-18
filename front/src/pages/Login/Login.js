@@ -32,8 +32,8 @@ function Login() {
 	};
 
 	return (
-		<form onSubmit={validate} className="login" style={{ marginTop: 50 }}>
-			<div className="form-group" style={{ marginTop: 10 }}>
+		<form onSubmit={validate} className="login" style={{color: 'white'}}>
+			<div className="form-group" style={{ marginBottom: 10, marginTop: 20 }}>
 				<label htmlFor="email">Email</label>
 				<input
 					type="email"
@@ -45,7 +45,7 @@ function Login() {
 					onInput={(e) => setEmail(e.target.value)}
 				/>
 			</div>
-			<div className="form-group" style={{ marginTop: 10 }}>
+			<div className="form-group" style={{ marginBottom: 10 }}>
 				<label htmlFor="pasword">Mot de passe</label>
 				<input
 					type="password"
@@ -56,7 +56,7 @@ function Login() {
 					onInput={(e) => setPassword(e.target.value)}
 				/>
 			</div>
-			<button type="submit" className="btn btn-primary" href="/" style={{ marginTop: 20 }}>
+			<button type="submit" className="btn btn-primary" href="/" style={{backgroundColor: "#FD2D01", borderColor: "#FD2D01"}}>
 				Valider
 			</button>
 		</form>

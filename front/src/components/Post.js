@@ -9,6 +9,7 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { AppContext } from '../AppContext';
 import Spinner from './Spinner';
 import jwtDecode from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Post(props) {
@@ -149,14 +150,14 @@ export default function Post(props) {
 					<FontAwesomeIcon
 						icon={faThumbsUp}
 						onClick={() => likeSubmit(liked + 1)}
-						style={{ color: liked ? 'blue' : 'black' }}
+						style={{ color: liked ? '#FD2D01' : 'black' }}
 					/>
 					<p>{likesCount}</p>
 				</div>
 			</div>
 			{ 
 				editMode &&
-				<form onSubmit={updatePost} className="edit-form">
+				<form onSubmit={updatePost} className="edit-form" style={{backgroundColor: "#FFD7D7"}}>
 					<div className="form-group" style={{ marginTop: 10 }}>
 						<label htmlFor="image">Image</label>
 						<input
@@ -172,7 +173,7 @@ export default function Post(props) {
 					</div>
 					{
 						!loading &&
-						<button type="submit" className="btn btn-primary" href="/" style={{ marginTop: 20 }}>
+						<button type="submit" className="btn btn-primary" href="/" style={{ marginTop: 20, backgroundColor: "#FD2D01", borderColor: "#FD2D01" }}>
 							Mettre à jour
 						</button> 
 					}

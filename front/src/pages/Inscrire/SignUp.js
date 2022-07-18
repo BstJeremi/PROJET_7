@@ -29,11 +29,10 @@ function SignUp() {
 	};
 
 	return (
-		<form onSubmit={signup}>
+		<form onSubmit={signup} style={{color: 'white'}}>
 			<div className="form-row">
-				<div className="col-md-4 mb-3">
+				<div className="form-group" style={{marginBottom: 10, marginTop: 20}}>
 					<label htmlFor="validationServerUsername">Pseudo</label>
-					<div className="input-group">
 						<input
 							type="text"
 							className="form-control"
@@ -42,9 +41,8 @@ function SignUp() {
 							required
 							onInput={(e) => setPseudo(e.target.value)}
 						/>
-					</div>
 				</div>
-				<div className="form-group col-md-6">
+				<div className="form-group" style={{marginBottom: 10}}>
 					<label htmlFor="email">Email</label>
 					<input
 						type="email"
@@ -53,7 +51,7 @@ function SignUp() {
 						onInput={(e) => setEmail(e.target.value)}
 					/>
 				</div>
-				<div className="form-group col-md-6">
+				<div className="form-group" style={{marginBottom: 10}}>
 					<label htmlFor="password">Mot de passe</label>
 					<input
 						type="password"
@@ -63,7 +61,7 @@ function SignUp() {
 					/>
 				</div>
 			</div>
-			<button type="submit" className="btn btn-primary">
+			<button type="submit" className="btn btn-primary" style={{backgroundColor: "#FD2D01", borderColor: "#FD2D01"}}>
 				S'inscrire
 			</button>
 		</form>
